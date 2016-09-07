@@ -1,0 +1,57 @@
+the system shall allow multiple users to connect remotely using mobile devices browser
+
+# The game life stages
+Waiting (waiting for players to join)
+started
+Ended
+
+# Types of user
+user
+host
+player
+[V1.1]ghost 
+
+
+
+# Before the game start:
+
+A user can see the list games.
+A user can creat a game (this user is called the game host, this user is also a game player)
+A user can join a waiting game (this user is called a game player)
+the host of the game can start the game
+[V1.1] a user can join a started game (this user is called a ghost)
+
+# During a game
+ 
+Each game player will see the pulic information and the player private information
+[V1.1] a ghost can see only the public information
+The user will be able to interact with the browser to see information and to perform actions.
+
+## Information availbe for user
+
+Public:
+* feeding pool
+* spicies (population size, body size, special treats)
+
+Private
+* own cards
+
+
+## Possible actions
+
+### during initial phase
+put a card for the feeding pool
+
+### duing building phase
+put a card as a treat
+discard a treat
+discard a card to get a new specie
+
+### during feeding phase
+feed a specie
+use a special card
+
+
+# UI
+
+the ui will provide interaction by clicking buttons and draging elements.

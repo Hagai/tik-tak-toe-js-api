@@ -1,0 +1,50 @@
+start a tornado webserver
+
+the api will be
+
+
+URL tik-tak-toe/api/v1/games
+GET
+return a list of games
+response:
+{
+"games": [
+	"game_id": {
+		"type": number,
+		"description": unique index for the game,
+	},
+	 "game_status": {
+		"type": {"enum": ["Panding", "Started", "Ended"]}	
+	}
+]
+}
+
+URL tik-tak-toe/api/v1/games
+POST
+create a new game
+response:
+{
+"games": [
+	"game_id": {
+		"type": number,
+		"description": unique index for the game,
+	},
+	 "game_status": {
+		"type": {"enum": ["Panding", "Started", "Ended"]}	
+	}
+],
+"result":{
+	"type": {"enum": ["Sucess", "Failur"]}	
+	},
+"message":{
+	"type": "string"	
+	}
+}
+
+
+URL tik-tak-toe/api/v1/games
+return a list of games
+
+
+URL tik-tak-toe/api/v1/games/<game_id>/cell
+POST

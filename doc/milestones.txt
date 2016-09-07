@@ -1,0 +1,93 @@
+# milestone 1
+
+duration 2:05 hours
+
+* simplicit game logic 
+* naive front end 
+
+Create a new game for two players (tic-tak-toe)
+Use the same browser for both plyers
+UI is a simple HTML table.
+A web page will direct directly to the game
+
+To reach this milestone we need:
+
+* working webserver
+* html page with table
+* javascript that will handle tic-tak-toe logic.
+
+
+2. create a 3x3 table [15 min]
+3. capture click - draw an X if a click was made. [25 min]
+4. after each cell click event:  [1 hour]
+check if there are 3X in a row. 
+if so - run alert("3 X in a row").
+5. add another player. [25 min]
+ add a variable who will save the player turn. ]
+ if X draw X if O draw O. 
+ check if there are 3O in a row. 
+ if so - run alert("3 O in a row").
+
+[Missing in by here]
+
+* game continue after win [if win change game status to ended]
+* game continue after all cells were filled [add function - is cell availible. if none 0 - change to game eneded]
+* need to display current player [after each turn - update string]
+
+ 
+ # milestone 2
+ 
+ * add db
+ * add api for game (to preform actions and get information)
+ * api works with the db
+ * front end will work with the api. just calls db and act acording to the responses.
+ 
+ The user expirience does not change.
+ 
+ To reach this milestone we need:
+ 
+1. launch a webserver [30 min]
+ 
+ 1. 
+ build a db for tic-tak-toe table. 
+ The table will have 9 fields. 
+ each filed will be a char filed that could take two values 'O' or 'X'.
+ 
+ 2 develop the api
+ build an api for performing actions
+ build an api for getting the current status
+ 
+ 3. clicking on table cell will call an API with the (game id, player id, cell number)
+ the gameid will be 0 for now.
+ 
+ 4. after each click the game status will be downloaded from the server and displyed.
+ 
+ # milestone 3
+ 
+ add create new game page
+ the web server will work with two players connected from different browsers.
+ 
+ 1. add a page for managing games.
+ 2. a button for creating a new game. 
+ 3. show active games.
+ 4. allow to join a game
+ 5. make the host able to start a game if two people have joined.
+ 6. give each player a playerid. 
+ refresh the page each second. (busy wait)
+ display the turn.
+ return error message if acting not in turn.
+ 
+# milestone 3
+
+learn angular.js 2.0 and replace the busy wait to event driven architecture.    
+  
+ 
+====
+
+After we reach this stage we need to do the following tasks:
+* Model all game variables (so the db could represent a complete state of the system)
+* Build a webpage that for each stage of the game allow to perform all availible actions.
+* Write API for the avilible actions that handle each action - change the db accordingly.
+ 
+
+ 
