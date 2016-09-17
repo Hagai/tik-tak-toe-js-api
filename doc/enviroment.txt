@@ -1,0 +1,5 @@
+The python enviroment is anaconda 4.1.1 32 bit.
+with virual enviroment made with the command:
+>conda create -p .\conda_venv python tornado numpy sqlalchemy requests
+or 
+>conda create -n conda_venv_name python tornado numpy sqlalchemy requests
