@@ -1,4 +1,0 @@
-numpy==1.11.1
-requests==2.11.1
-SQLAlchemy==1.0.13
-tornado==4.4.1
