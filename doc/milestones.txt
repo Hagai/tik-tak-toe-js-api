@@ -2,7 +2,7 @@
 
 duration 2:05 hours
 
-* simplicit game logic 
+* simplest game logic
 * naive front end 
 
 Create a new game for two players (tic-tak-toe)
