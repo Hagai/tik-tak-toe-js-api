@@ -9,6 +9,7 @@ class Player(Base):
     __tablename__ = 'player'
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
+
     # board = relationship("Board", back_populates="player")
 
     def __init__(self, name):
