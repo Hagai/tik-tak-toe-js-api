@@ -74,11 +74,12 @@ class GameBoard:
         self.cell_8 = cell_8
         self.cell_9 = cell_9
         self._cell_list = [cell_1, cell_2, cell_3, cell_4, cell_5, cell_6, cell_7, cell_8, cell_9,]
+        self._cell_dict = {_cell.place: _cell for _cell in self._cell_list}
 
     def get_cell_by_index(self, index):
         if (index < 1) or (index > 9):
             raise ValueError("index should be between 1 and 9 (got {index})".format(index=index))
-        return self._cell_list[index]
+        return self._cell_dict.get(index)
 
 
 class GameState:
@@ -172,6 +173,13 @@ class GameLogic:
         current_cell_index = game_action.cell.place
         current_cell_state = game_state.board.get_cell_by_index(current_cell_index)
         current_cell_state.value = game_action.player.name
+        player_turn = game_state.player_turn
+        if player_turn == PlayerTurn.player1:
+            game_state.player_turn = PlayerTurn.player2
+        elif player_turn == PlayerTurn.player2:
+            game_state.player_turn = PlayerTurn.player1
+        else:
+            raise RuntimeError("Invalid player {player_turn}".format(player_turn=player_turn))
 
     @staticmethod
     def is_legal_action(game_state, game_action):

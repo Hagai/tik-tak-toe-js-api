@@ -1,0 +1,249 @@
+The have 2 resources
+
+1. game
+2. player
+
+the api will allow to
+1. list players
+2. create a new player
+3. list games
+4. create a new game
+5. register player to game
+6. get a game status
+7. perform an action in a game by a player
+
+1.  list players
+GET tik-tak-toe/api/v1/players
+{
+    "players": [
+        {
+            "player_id": {
+                "type": number,
+                "description": unique index for the player,
+            },
+            "player_name": {
+                "type": string
+            }
+        }
+    ]
+}
+2. create new player
+POST tik-tak-toe/api/v1/players
+{
+    "player": [
+        {
+            "player_name": {
+                "type": string
+            }
+        }
+    ]
+}
+response:
+(if fail players is empty list)
+{
+"players": [
+        {
+            "player_id": {
+                "type": number,
+                "description": unique index for the player,
+            },
+            "player_name": {
+                "type": string
+            }
+        }
+    ],
+    "result":{
+	    "type": {"enum": ["Success", "Failure"]}
+	},
+    "message":{
+        "type": "string"
+    }
+}
+3. list games
+GET tik-tak-toe/api/v1/games
+return a list of games
+response:
+{
+    "games": [
+        {
+            "game_id": {
+                "type": number,
+                "description": unique index for the game,
+            },
+            "game_status": {
+                "type": {"enum": ["Panding", "Started", "Ended"]}
+            },
+            "game_state": {
+                "cell_1": {"enum": [None, "x", "o"]},
+                ...
+                "cell_9": {"enum": [None, "x", "o"]},
+                "player_turn": {"enum": ["x", "o"]}
+            },
+            player_x: {
+                "type": number
+                "description: "player id"
+                "ref": player
+            },
+            player_o: {
+                "type": number
+                "description: "player id"
+                "ref": player
+            }
+        }
+    ]
+}
+4. create a new game
+POST tik-tak-toe/api/v1/games
+{
+}
+response:
+{
+"games": [
+	"game_id": {
+		"type": number,
+		"description": unique index for the game,
+	},
+	 "game_status": {
+		"type": {"enum": ["Panding", "Started", "Ended"]}	
+	},
+    "game_state": {
+        "cell_1": {"enum": [None, "x", "o"]},
+        ...
+        "cell_9": {"enum": [None, "x", "o"]},
+        "player_turn": {"enum": ["x", "o"]}
+    },
+    player_x: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    },
+    player_o: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    }
+],
+"result":{
+	"type": {"enum": ["Success", "Failure"]}
+	},
+"message":{
+	"type": "string"	
+	}
+}
+5. register player to game
+POST tik-tak-toe/api/v1/games/$game_id
+{
+    "player_id":
+    {
+        "type": "number"
+    }
+}
+response:
+{
+"games": [
+	"game_id": {
+		"type": number,
+		"description": unique index for the game,
+	},
+	 "game_status": {
+		"type": {"enum": ["Panding", "Started", "Ended"]}
+	},
+    "game_state": {
+        "cell_1": {"enum": [None, "x", "o"]},
+        ...
+        "cell_9": {"enum": [None, "x", "o"]},
+        "player_turn": {"enum": ["x", "o"]}
+    },
+    player_x: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    },
+    player_o: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    }
+    ]
+],
+"result":{
+	"type": {"enum": ["Success", "Failure"]}
+	},
+"message":{
+	"type": "string"
+	}
+}
+6. get a game status
+GET tik-tak-toe/api/v1/games/$game_id
+{
+    "game_id": {
+        "type": number,
+        "description": unique index for the game,
+    },
+    "game_status": {
+        "type": {"enum": ["Panding", "Started", "Ended"]}
+    },
+    "game_state": {
+        "cell_1": {"enum": [None, "x", "o"]},
+        ...
+        "cell_9": {"enum": [None, "x", "o"]},
+        "player_turn": {"enum": ["x", "o"]}
+    },
+    player_x: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    },
+    player_o: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    }
+}
+7. perform an action in a game by a player
+POST tik-tak-toe/api/v1/games/$game_id
+{
+    "player_id":
+    {
+        "type": "number"
+    },
+    "cell_id": {
+        "type": "number"
+    }
+}
+response:
+{
+"games": [
+	"game_id": {
+		"type": number,
+		"description": unique index for the game,
+	},
+	 "game_status": {
+		"type": {"enum": ["Panding", "Started", "Ended"]}
+	},
+    "game_state": {
+        "cell_1": {"enum": [None, "x", "o"]},
+        ...
+        "cell_9": {"enum": [None, "x", "o"]},
+        "player_turn": {"enum": ["x", "o"]}
+    },
+    player_x: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    },
+    player_o: {
+        "type": number
+        "description: "player id"
+        "ref": player
+    }
+
+    ]
+],
+"result":{
+	"type": {"enum": ["Success", "Failure"]}
+	},
+"message":{
+	"type": "string"
+	}
+}

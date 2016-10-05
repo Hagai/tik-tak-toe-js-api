@@ -52,7 +52,13 @@ if so - run alert("3 X in a row").
  build a db for tic-tak-toe table. 
  The table will have 9 fields. 
  each filed will be a char filed that could take two values 'O' or 'X'.
- 
+
+ 1.1 implementation the game system at the server side.
+ represent a game state
+ represent a game move
+ test series of moves
+
+
  2 develop the api
  build an api for performing actions
  build an api for getting the current status
