@@ -1,5 +1,7 @@
 """
 Game module
+
+This module will contain all the game logic
 """
 
 DEBUG = True
@@ -73,7 +75,7 @@ class GameBoard:
         self.cell_7 = cell_7
         self.cell_8 = cell_8
         self.cell_9 = cell_9
-        self._cell_list = [cell_1, cell_2, cell_3, cell_4, cell_5, cell_6, cell_7, cell_8, cell_9,]
+        self._cell_list = [cell_1, cell_2, cell_3, cell_4, cell_5, cell_6, cell_7, cell_8, cell_9, ]
         self._cell_dict = {_cell.place: _cell for _cell in self._cell_list}
 
     def get_cell_by_index(self, index):
@@ -86,18 +88,24 @@ class GameState:
     def __init__(self,
                  player_turn,
                  board,
+                 player_x,
+                 player_y,
                  ):
         """
         :type player_turn: Player
         :type board: GameBoard
+        :type player_x: Player
+        :type player_y: Player
         """
         self.player_turn = player_turn
+        self.player_x = player_x
+        self.player_y = player_y
         self.board = board
         if DEBUG:
             self.verify_state()
 
     def verify_state(self):
-        assert self.player_turn in [PlayerTurn.player1, PlayerTurn.player2]
+        assert self.player_turn in [self.player_x, self.player_y]
         assert self.board.cell_1.value in [None, CellValue.player1, CellValue.player2]
         assert self.board.cell_2.value in [None, CellValue.player1, CellValue.player2]
         assert self.board.cell_3.value in [None, CellValue.player1, CellValue.player2]
@@ -109,7 +117,8 @@ class GameState:
         assert self.board.cell_9.value in [None, CellValue.player1, CellValue.player2]
 
     @staticmethod
-    def get_initial_state(player_turn=PlayerTurn.player1):
+    def get_initial_state(player_turn=PlayerTurn.player1, player_x=PlayerTurn.player1, player_y=PlayerTurn.player2):
+        assert player_turn in [player_x, player_y]
         cell_1 = Cell(1, CellValue.empty)
         cell_2 = Cell(2, CellValue.empty)
         cell_3 = Cell(3, CellValue.empty)
@@ -132,7 +141,9 @@ class GameState:
         )
         game_status = GameState(
             player_turn,
-            board
+            board,
+            player_x,
+            player_y
         )
         return game_status
 
@@ -174,10 +185,10 @@ class GameLogic:
         current_cell_state = game_state.board.get_cell_by_index(current_cell_index)
         current_cell_state.value = game_action.player.name
         player_turn = game_state.player_turn
-        if player_turn == PlayerTurn.player1:
-            game_state.player_turn = PlayerTurn.player2
-        elif player_turn == PlayerTurn.player2:
-            game_state.player_turn = PlayerTurn.player1
+        if player_turn == game_state.player_x:
+            game_state.player_turn = game_state.player_y
+        elif player_turn == game_state.player_y:
+            game_state.player_turn = game_state.player_x
         else:
             raise RuntimeError("Invalid player {player_turn}".format(player_turn=player_turn))
 

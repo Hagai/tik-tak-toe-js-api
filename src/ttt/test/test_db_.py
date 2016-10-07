@@ -70,8 +70,8 @@ class TestBoard(unittest.TestCase):
         session.commit()
         player_1, player_2 = session.query(model.Player).all()
         board_name = 'board_test'
-        board = model.Board(board_name, player_1, player_2)
+        board = model.GameState(board_name, player_1, player_2, player_1)
         session.add(board)
         session.commit()
-        board_result = session.query(model.Board).one()
+        board_result = session.query(model.GameState).one()
         self.assertEqual(board_result.name, board.name)
