@@ -113,6 +113,7 @@ $(document).ready(function(){
                 alert("This cell was choosed already!")
                 return
             }
+//        fill the cell text with the player mark
         $(this).text(player_sign);
 
         update_game_status()

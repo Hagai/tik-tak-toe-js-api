@@ -1,0 +1,16 @@
+Architecture:
+The main modules are:
+1. The UI - web based on angularjs 2
+2. API server written in tornado
+3. DB based on SQLAlchemy
+
+At each request from the UI to the API server,, the API server will query the db to get the current state
+The API server will have an internal representation of the state of the system
+The API server will update the DB according to the action that was made
+the API server will response to the UI request
+
+For testing a predefined game state can be used
+
+???
+There is a duplication of code between the database.model and game
+Is there a way to get rid of the duplication and still be able to separate the DB and the API server?

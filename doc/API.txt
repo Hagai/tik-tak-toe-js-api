@@ -77,7 +77,7 @@ response:
                 "cell_1": {"enum": [None, "x", "o"]},
                 ...
                 "cell_9": {"enum": [None, "x", "o"]},
-                "player_turn": {"enum": ["x", "o"]}
+                "player_turn_symbol": {"enum": ["x", "o"]}
             },
             player_x: {
                 "type": number
@@ -95,6 +95,7 @@ response:
 4. create a new game
 POST tik-tak-toe/api/v1/games
 {
+    "action_type": "create new game"
 }
 response:
 {
@@ -110,7 +111,7 @@ response:
         "cell_1": {"enum": [None, "x", "o"]},
         ...
         "cell_9": {"enum": [None, "x", "o"]},
-        "player_turn": {"enum": ["x", "o"]}
+        "player_turn_symbol": {"enum": ["x", "o"]}
     },
     player_x: {
         "type": number
@@ -136,8 +137,15 @@ POST tik-tak-toe/api/v1/games/$game_id
     "player_id":
     {
         "type": "number"
-    }
+    },
+    OR
+    "player_turn_symbol":
+    {
+        "enum": [ "x", "o"]
+    },
+    "player_type": {"enum": ["player_turn_symbol", "x", "o"]}
 }
+# First players x and 0 needs to be registered, then the current player need to be registered.
 response:
 {
 "games": [
@@ -152,7 +160,7 @@ response:
         "cell_1": {"enum": [None, "x", "o"]},
         ...
         "cell_9": {"enum": [None, "x", "o"]},
-        "player_turn": {"enum": ["x", "o"]}
+        "player_turn_symbol": {"enum": ["x", "o"]}
     },
     player_x: {
         "type": number
@@ -187,7 +195,7 @@ GET tik-tak-toe/api/v1/games/$game_id
         "cell_1": {"enum": [None, "x", "o"]},
         ...
         "cell_9": {"enum": [None, "x", "o"]},
-        "player_turn": {"enum": ["x", "o"]}
+        "player_turn_symbol": {"enum": ["x", "o"]}
     },
     player_x: {
         "type": number
@@ -225,7 +233,7 @@ response:
         "cell_1": {"enum": [None, "x", "o"]},
         ...
         "cell_9": {"enum": [None, "x", "o"]},
-        "player_turn": {"enum": ["x", "o"]}
+        "player_turn_symbol": {"enum": ["x", "o"]}
     },
     player_x: {
         "type": number

@@ -36,8 +36,23 @@ class TestGameState(unittest.TestCase):
         self.conn = conn
 
     def test_create_game(self):
-        pass
+        game_1_state_1 = self.conn.create_new_game()
+        game_2_state_1 = self.conn.create_new_game()
+        self.assertNotEqual(game_1_state_1, game_2_state_1)
+        self.assertNotEqual(game_1_state_1.game_id, game_2_state_1.game_id)
+        self.assertEqual(game_1_state_1.board, game_2_state_1.board)
 
-    def test_empty_game(self):
-        pass
+    def test_set_game_state(self):
+        conn = self.conn
+        game_state_created = conn.create_new_game()
+        player_1_name = 'docX'
+        player_1= conn.create_new_player(player_1_name)
+        player_2_name = 'docY'
+        player_2 = conn.create_new_player(player_2_name)
+        game_state_created.player_x = player_1
+        game_state_created.player_y = player_2
+        game_state_created.player_turn = player_1
+        conn.set_game_state(game_state_created.game_id, game_state_created)
+        game_state_queried = conn.get_game_state(game_state_created.game_id)
+        self.assertEqual(game_state_created.board, game_state_queried.board)
 

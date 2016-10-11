@@ -17,7 +17,6 @@ class Player(Base):
 class GameState(Base):
     __tablename__ = 'board'
     id = Column(Integer, primary_key=True)
-    name = Column(String(64))
     player_x_id = Column(Integer, ForeignKey("player.id"))
     player_y_id = Column(Integer, ForeignKey("player.id"))
     player_active_id = Column(Integer, ForeignKey("player.id"))
@@ -33,9 +32,3 @@ class GameState(Base):
     cell_7 = Column(String(1))
     cell_8 = Column(String(1))
     cell_9 = Column(String(1))
-
-    def __init__(self, name, player_x, player_y, player_active):
-        self.name = name
-        self.player_x = player_x
-        self.player_y = player_y
-        self.player_active = player_active

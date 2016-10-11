@@ -19,6 +19,11 @@ class TestGameStatus(unittest.TestCase):
         self.assertEqual(game_state.board.cell_9.place, 9)
         self.assertEqual(game_state.player_turn, game.PlayerTurn.player2)
 
+    def test_game_without_players(self):
+        game_board = game.GameBoard.create_empty_board()
+        game_state = game.GameState(game_board)
+        self.assertEqual(game_state.game_id, 0)
+        self.assertEqual(game_state.board.cell_1.value, None)
 
 class TestGameAction(unittest.TestCase):
     def test_action(self):
