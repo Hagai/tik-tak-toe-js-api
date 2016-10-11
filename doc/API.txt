@@ -134,6 +134,9 @@ response:
 5. register player to game
 POST tik-tak-toe/api/v1/games/$game_id
 {
+    {
+    "action_type":  {"enum": ["add_player", "play"]}
+    },
     "player_id":
     {
         "type": "number"
@@ -206,6 +209,9 @@ GET tik-tak-toe/api/v1/games/$game_id
 7. perform an action in a game by a player
 POST tik-tak-toe/api/v1/games/$game_id
 {
+    {
+    "action_type":  {"enum": ["add_player", "play"]}
+    },
     "player_id":
     {
         "type": "number"

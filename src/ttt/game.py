@@ -11,6 +11,7 @@ class GameStatusOptions:
     pending = "pending"
     started = "started"
     ended = "ended"
+    tie = "tie"
 
 
 class Player:
@@ -191,12 +192,14 @@ class GameState:
     def get_game_status(self):
         if self.is_pending():
             return GameStatusOptions.pending
-        elif self.is_game_ended():
+        elif self.is_game_won():
             return GameStatusOptions.ended
-        else:
+        elif self.is_play_available():
             if DEBUG:
                 self.verify_state()
             return GameStatusOptions.started
+        else:
+            return GameStatusOptions.tie
 
     def to_json(self):
         if self.player_x is None:
@@ -241,7 +244,7 @@ class GameState:
         }
         return json_obj
 
-    def is_game_ended(self):
+    def is_game_won(self):
         victory_options = [
             [self.board.cell_1, self.board.cell_2, self.board.cell_3],
             [self.board.cell_4, self.board.cell_5, self.board.cell_6],
@@ -265,6 +268,9 @@ class GameState:
                 is_game_end = True
         return is_game_end
 
+    def is_play_available(self):
+        has_empty_cell = any([cell.value == CellValue.empty for cell in self.board._cell_list])
+        return has_empty_cell
 
 class GameAction:
     def __init__(self, player, cell):
@@ -288,14 +294,24 @@ class GameLogic:
             assert GameLogic.is_legal_action(game_state, game_action)
         current_cell_index = game_action.cell.place
         current_cell_state = game_state.board.get_cell_by_index(current_cell_index)
-        current_cell_state.value = game_action.player.name
-        player_turn = game_state.player_turn
-        if player_turn == game_state.player_x:
-            game_state.player_turn = game_state.player_y
-        elif player_turn == game_state.player_y:
-            game_state.player_turn = game_state.player_x
+
+        if game_action.player == game_state.player_x:
+            cell_value_to_use = CellValue.player1
+        elif game_action.player == game_state.player_y:
+            cell_value_to_use = CellValue.player2
         else:
-            raise RuntimeError("Invalid player {player_turn}".format(player_turn=player_turn))
+            raise Exception("player does not exists {player}".format(player=game_action.player))
+        current_cell_state.value = cell_value_to_use
+        if game_state.get_game_status() == GameStatusOptions.started:
+            player_turn = game_state.player_turn
+            if player_turn == game_state.player_x:
+                game_state.player_turn = game_state.player_y
+            elif player_turn == game_state.player_y:
+                game_state.player_turn = game_state.player_x
+            else:
+                raise RuntimeError("Invalid player {player_turn}".format(player_turn=player_turn))
+        else:
+            pass  # game has ended
 
     @staticmethod
     def is_legal_action(game_state, game_action):

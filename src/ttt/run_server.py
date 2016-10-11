@@ -105,7 +105,7 @@ class GameHandler(tornado.web.RequestHandler):
         response_instance = BuildResponse(message, result, json_response)
         self.write(response_instance.get_response())
 
-    def post(self, game_id):
+    def _handle_add_player(self, game_id, request_json):
         game_state = conn.get_game_state(game_id)
         game_status = game_state.get_game_status()
         if game_status == game.GameStatusOptions.started:
@@ -113,13 +113,12 @@ class GameHandler(tornado.web.RequestHandler):
             result = False
             json_response = {}
             response_instance = BuildResponse(message, result, json_response)
-        elif game_status == game.GameStatusOptions.ended:
+        elif game_status in [game.GameStatusOptions.ended, game.GameStatusOptions.tie]:
             message = "Game has ended"
             result = False
             json_response = {}
             response_instance = BuildResponse(message, result, json_response)
         else:
-            request_json = escape.json_decode(self.request.body)
             player_type = request_json["player_type"]
             player_id = request_json["player_id"]
             try:
@@ -151,6 +150,64 @@ class GameHandler(tornado.web.RequestHandler):
                 json_response = {}
                 response_instance = BuildResponse(message, result, json_response)
         self.write(response_instance.get_response())
+
+    def _handle_play(self, game_id, request_json):
+        game_state = conn.get_game_state(game_id)
+        game_status = game_state.get_game_status()
+        if game_status == game.GameStatusOptions.started:
+            player_id = request_json["player_id"]
+            player_turn_id = game_state.player_turn.id
+            is_player_turn = player_id == player_turn_id
+            try:
+                player = conn.get_player(player_id)
+            except:
+                player = None
+            if (player is not None) and is_player_turn:
+                if game.DEBUG:
+                    game_state.verify_state()
+                cell_id = request_json["cell_id"]
+                current_cell = game_state.board.get_cell_by_index(cell_id)
+                game_action = game.GameAction(player, cell=current_cell)
+                game.GameLogic().perform_action(game_state, game_action)
+                conn.set_game_state(game_id, game_state)
+                json_response = dict(
+                    games=[game_state.to_json()]
+                )
+                message = "Action played"
+                result = True
+                response_instance = BuildResponse(message, result, json_response)
+            else:
+                message = "Invalid request."
+                if player is None:
+                    message += " player is none"
+                elif not is_player_turn:
+                    message += " not player id {player_id} turn".format(player_id=player_id)
+                else:
+                    message += " player type illegal"
+                result = False
+                json_response = {}
+                response_instance = BuildResponse(message, result, json_response)
+        elif game_status in [game.GameStatusOptions.ended, game.GameStatusOptions.tie]:
+            message = "Game has ended"
+            result = False
+            json_response = {}
+            response_instance = BuildResponse(message, result, json_response)
+        else:
+            message = "Game is  pending"
+            result = False
+            json_response = {}
+            response_instance = BuildResponse(message, result, json_response)
+
+        self.write(response_instance.get_response())
+
+    def post(self, game_id):
+        request_json = escape.json_decode(self.request.body)
+        action_type = request_json["action_type"]
+        if action_type == "add_player":
+            self._handle_add_player(game_id, request_json)
+        if action_type == "play":
+            self._handle_play(game_id, request_json)
+
 
 
 def make_app():
