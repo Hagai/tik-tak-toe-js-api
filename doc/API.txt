@@ -138,12 +138,7 @@ POST tik-tak-toe/api/v1/games/$game_id
     {
         "type": "number"
     },
-    OR
-    "player_turn_symbol":
-    {
-        "enum": [ "x", "o"]
-    },
-    "player_type": {"enum": ["player_turn_symbol", "x", "o"]}
+    "player_type": {"enum": ["player_turn", "x", "o"]}
 }
 # First players x and 0 needs to be registered, then the current player need to be registered.
 response:
